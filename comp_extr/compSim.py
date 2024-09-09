@@ -49,7 +49,7 @@ paramsDict={
             "perm":0.,
             "stall":0.,
             "stallall":False,
-            "polysteps":200,
+            "polysteps":540,
             "ignore":True,
             "integrator":"langevin",
             "restartpath":"restart",

@@ -12,6 +12,7 @@ There are two simulation codes here:
 2) *m-to-g1* - A code for performing time-calibrated polymer simulations that progress from
    mitotic-like chromosomes to interphase-like chromosomes.
 
-## References
+## References ##
 [1] M Imakaev, A Goloborodoko, HB Brandao. polychrom v0.1.0. *Zenodo*: https://zenodo.org/records/3579473 DOI: 10.5281/zenodo.3579472
+
 [2] P Eastman et al. OpenMM 8: Molecular Dynamics Simulation with Machine Learning Potentials. *J Phys Chem B* 128:109-116 (2023)

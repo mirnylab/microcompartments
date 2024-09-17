@@ -1,7 +1,9 @@
 # microcompartments
 Polymer simulations of compartments and extrusion for modeling the mitosis-to-G1 transition
 
-Reference: bioRxiv <...>
+Reference: VY Goel, NG Aborden, JM Jusuf, H Zhang, L Mori, LA Mirny, G Blobel, EJ Banigan, AS Hansen. 
+"Dynamics of microcompartment formation at the mitosis-to-G1 transition." bioRxiv 611917 (2024).
+https://www.biorxiv.org/content/10.1101/2024.09.16.611917
 
 Also see: The polychrom library (https://github.com/open2c/polychrom/) [1], a wrapper for the 
 OpenMM MD package [2]. Beyond using the polychrom library, the code in this repository used 

@@ -15,6 +15,8 @@ There are two simulation codes here:
    mitotic-like chromosomes to interphase-like chromosomes.
 
 ## References ##
-[1] M Imakaev, A Goloborodoko, HB Brandao. polychrom v0.1.0. *Zenodo*: https://zenodo.org/records/3579473 DOI: 10.5281/zenodo.3579472
+[1] VY Goel et al.  Dynamics of microcompartment formation at the mitosis-to-G1 transition. *bioRxiv* 611917 (2024).
 
-[2] P Eastman et al. OpenMM 8: Molecular Dynamics Simulation with Machine Learning Potentials. *J Phys Chem B* 128:109-116 (2023)
+[2] M Imakaev, A Goloborodoko, HB Brandao. polychrom v0.1.0. *Zenodo*: https://zenodo.org/records/3579473 DOI: 10.5281/zenodo.3579472
+
+[3] P Eastman et al. OpenMM 8: Molecular Dynamics Simulation with Machine Learning Potentials. *J Phys Chem B* 128:109-116 (2023).

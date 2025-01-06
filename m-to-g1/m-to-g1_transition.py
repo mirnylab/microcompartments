@@ -263,6 +263,12 @@ t_C1_changeLife=int(float(paramsDict['t_C1_changeLife']))
 t_sphere_inflate_start=int(float(paramsDict['t_sphere_inflate_start']))
 t_sphere_inflate_end=int(float(paramsDict['t_sphere_inflate_end']))
 
+#disables deactivation of already inactive LEFs
+if t_C1_incStart>=t_C1_decEnd:
+    print("t_C1_incStart>=t_C1_decEnd, so ignoring and setting N_C1_max=N_C1_start")
+    N_C1_max=N_C1_start
+    Nlefs = N_C1_max + N_C2 + N_Coh
+
 #assertions for condensin times
 assert t_C1_incEnd % restartUpdaterEveryBlocks == 0
 assert t_C1_decEnd % restartUpdaterEveryBlocks == 0
@@ -677,7 +683,7 @@ for updaterCount in range(updaterInitsTotal):
     lefs_to_activate=[]
     lefs_to_deactivate=[]
 
-    if (relative_time >= t_C1_incStart) and (relative_time <= t_C1_incEnd):
+    if (relative_time >= t_C1_incStart) and (relative_time <= t_C1_incEnd) and (relative_time <= t_C1_decEnd):
         #activate some number of LEFs. use a target number to ensure we stay on track & don't fall victim to rounding errors
         target_num_activated = (N_C1_max-N_C1_start) * (relative_time-t_C1_incStart+1) / (t_C1_incEnd-t_C1_incStart+1)
         Nactivate= int(np.round(target_num_activated - num_C1_activated,0))
@@ -685,7 +691,7 @@ for updaterCount in range(updaterInitsTotal):
         num_C1_activated+=Nactivate
         print("activate C1:",Nactivate,"list:",lefs_to_activate)
 
-    elif (relative_time > t_C1_decStart) and (relative_time <= t_C1_decEnd): #use > t_C1_decStart instead of >= here since we typically take t_C1_incEnd==t_C1_decStart, and we have an elif statement
+    if (relative_time >= t_C1_decStart) and (relative_time <= t_C1_decEnd): # eliminate if-elif structure to avoid problems if t_decStart=t_decEnd
         if t_C1_decEnd>t_C1_decStart:
             target_num_deactivated = N_C1_max * (relative_time-t_C1_decStart) / (t_C1_decEnd-t_C1_decStart) #corresponding to the above remark, we remove the +1 in the numerator and denominator
             Ndeactivate=int(np.round(target_num_deactivated-num_C1_deactivated))
@@ -695,7 +701,7 @@ for updaterCount in range(updaterInitsTotal):
         num_C1_deactivated+=Ndeactivate
         print("deactivate C1:",Ndeactivate,"list:",lefs_to_deactivate)
 
-    if (relative_time > t_C2_decStart) and (relative_time <= t_C2_decEnd):
+    if (relative_time >= t_C2_decStart) and (relative_time <= t_C2_decEnd):
         if t_C2_decEnd>t_C2_decStart:
             target_num_deactivated= N_C2 * (relative_time-t_C2_decEnd) / (t_C2_decEnd - t_C2_decStart)
             Ndeactivate=int(np.round(target_num_deactivated-num_C2_deactivated))

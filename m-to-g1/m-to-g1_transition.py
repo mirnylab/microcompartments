@@ -33,7 +33,7 @@ paramsDict={
             "cylinderFinalSizeFactor":0.5, # cylinder height to be reduced by 1/2
             "cylinderShortenStart": 3000, #25 min, time at which cylinder shortening to commences
             "cylinderShortenEnd": 3600,# and ends
-            "pinEnds":False,
+            "pinEnds":True,
             "BC_change_start": 3600, #time to start crossover from cyl to sph
             "BC_change_end": 4200, #time to end crossover from cyl to sph (leaving only sph)
             "t_sphere_inflate_start":999999999, # in a case where we only use spherical BC, use these to change density mid-sim
@@ -42,14 +42,14 @@ paramsDict={
             "outpath":"local_data",
             "npoly":61600, # 500 bp per mono, 1.925 Mb region
             "nchr":1,
-            "density":0.6, #initial prometaphase density
-            "densityInter":0.3, # density in interphase
-            "densityInflate":0.3, # density to target if we only use spherical BC
+            "density":0.65, #initial prometaphase density
+            "densityInter":0.25, # density in interphase
+            "densityInflate":0.25, # density to target if we only use spherical BC
             "repel":3.0,
              #compartment params
             "epsA":0.,
-            "epsB":0.15,
-            "epsC":1.5,
+            "epsB":0.05,
+            "epsC":0.9,
             "epsAB":0.,
             "epsAC":0.,
             "epsBC":0.,

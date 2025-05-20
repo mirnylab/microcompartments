@@ -33,7 +33,7 @@ paramsDict={
             "cylinderFinalSizeFactor":0.5, # cylinder height to be reduced by 1/2
             "cylinderShortenStart": 3000, #25 min, time at which cylinder shortening to commences
             "cylinderShortenEnd": 3600,# and ends
-            "pinEnds":True,
+            "pinEnds":False,
             "BC_change_start": 3600, #time to start crossover from cyl to sph
             "BC_change_end": 4200, #time to end crossover from cyl to sph (leaving only sph)
             "t_sphere_inflate_start":999999999, # in a case where we only use spherical BC, use these to change density mid-sim
@@ -42,14 +42,14 @@ paramsDict={
             "outpath":"local_data",
             "npoly":61600, # 500 bp per mono, 1.925 Mb region
             "nchr":1,
-            "density":0.65, #initial prometaphase density
-            "densityInter":0.25, # density in interphase
-            "densityInflate":0.25, # density to target if we only use spherical BC
+            "density":0.6, #initial prometaphase density
+            "densityInter":0.3, # density in interphase
+            "densityInflate":0.3, # density to target if we only use spherical BC
             "repel":3.0,
              #compartment params
             "epsA":0.,
-            "epsB":0.05,
-            "epsC":0.9,
+            "epsB":0.15,
+            "epsC":1.5,
             "epsAB":0.,
             "epsAC":0.,
             "epsBC":0.,
@@ -76,6 +76,8 @@ paramsDict={
             "permCoh":0.,
             "stall":0.5, #stall is site-based. so we'll make only cohesin pay attention to stalls
             "stallall":False,
+            "nonlin_Coh_load":0, # change to true to use 1-exp(-t/T) loading 
+            "tscale_Coh_load":12600, # half simulated G1 duration
             "t_C1_incStart": 2040, #default is 17 min after steady state prometa; "typical" in ms is 1800
             "t_C1_incEnd": 2400, #20 min after steady state prometa; typical is 2100
             "t_C1_decStart": 2400, #20 min after steady state prometa; typical is 2100
@@ -263,6 +265,9 @@ t_C1_changeLife=int(float(paramsDict['t_C1_changeLife']))
 t_sphere_inflate_start=int(float(paramsDict['t_sphere_inflate_start']))
 t_sphere_inflate_end=int(float(paramsDict['t_sphere_inflate_end']))
 
+NONLINEAR_COHESIN_LOAD=int(paramsDict['nonlin_Coh_load'])
+COHESIN_LOAD_TIME=int(float(paramsDict['tscale_Coh_load']))
+
 #disables deactivation of already inactive LEFs
 if t_C1_incStart>=t_C1_decEnd:
     print("t_C1_incStart>=t_C1_decEnd, so ignoring and setting N_C1_max=N_C1_start")
@@ -309,7 +314,7 @@ for pname in paramsDict:
                      'alen','blen',
                      'epsAll','epsC','epsAB', 'epsAC', 'epsBC','clen','cspace','epsA',
                      'stall','stallall',
-                     'C1_lifeFactor',
+                     'C1_lifeFactor','nonlin_Coh_load','tscale_Coh_load',
                      "comppath","ctcfpath","microcomppath",
                      'integrator',
                      'flag']:
@@ -352,6 +357,10 @@ if STALL_RATE>0.:
         folder = folder+"_stSites"+str(STALL_RATE)
 if not (FACTOR_CHANGE_C1 == 1.):
     folder=folder+"_lifeC1fac"+str(FACTOR_CHANGE_C1)
+if NONLINEAR_COHESIN_LOAD==1:
+    folder=folder+"_NONLINCOH"
+    if not COHESIN_LOAD_TIME==12600:
+        folder=folder+str(COHESIN_LOAD_TIME)
 if PBC:
     folder = folder+"_"+"PBC"
 if PIN_ENDS:
@@ -578,8 +587,6 @@ for updaterCount in range(updaterInitsTotal):
     
     if not PBC:
         #confining cylinder
-        #would be nice to decouple density change and BC change. but BC change is accompanied by axial shortening. 
-
         #idea: usually, t_densityMid=t_densityEnd. However, if we want to change from density to densityInter smoothly, set t_densityEnd to be t_densityStart + 2*(t_densityMid-t_densityStart). t_sphere_inflate is a totally different density time, changing density from densityInter to densityInflate. So in the end, we maintain obsolete names related to BCs, but the density is independently controlled
 
         if relative_time <= BC_change_end:
@@ -691,7 +698,7 @@ for updaterCount in range(updaterInitsTotal):
         num_C1_activated+=Nactivate
         print("activate C1:",Nactivate,"list:",lefs_to_activate)
 
-    if (relative_time >= t_C1_decStart) and (relative_time <= t_C1_decEnd): # eliminate if-elif structure to avoid problems if t_decStart=t_decEnd
+    if (relative_time >= t_C1_decStart) and (relative_time <= t_C1_decEnd): 
         if t_C1_decEnd>t_C1_decStart:
             target_num_deactivated = N_C1_max * (relative_time-t_C1_decStart) / (t_C1_decEnd-t_C1_decStart) #corresponding to the above remark, we remove the +1 in the numerator and denominator
             Ndeactivate=int(np.round(target_num_deactivated-num_C1_deactivated))
@@ -716,7 +723,12 @@ for updaterCount in range(updaterInitsTotal):
         newDeathRate.append(1./(FACTOR_CHANGE_C1*LIFETIME_C1))
 
     if (relative_time >= t_Coh_incStart) and (relative_time <= t_Coh_incEnd):
-        target_num_activated = N_Coh * (relative_time-t_Coh_incStart+1) / (t_Coh_incEnd-t_Coh_incStart+1)
+        if not NONLINEAR_COHESIN_LOAD:
+            target_num_activated = N_Coh * (relative_time-t_Coh_incStart+1) / (t_Coh_incEnd-t_Coh_incStart+1)
+        else:
+            delta_t = relative_time-t_Coh_incStart+1 # offset by 1 so first cohesin comes on at t_Coh_incStart
+            max_delta_t = t_Coh_incEnd-t_Coh_incStart+1
+            target_num_activated = N_Coh * (1-np.exp(-delta_t / COHESIN_LOAD_TIME)) / (1-np.exp(-max_delta_t/COHESIN_LOAD_TIME))
         Nactivate=int(np.round(target_num_activated - num_Coh_activated,0)) 
         lefs_to_activate.extend([nn for nn in range(N_C1_max+N_C2+num_Coh_activated, N_C1_max+N_C2+num_Coh_activated+Nactivate)])
         num_Coh_activated+=Nactivate

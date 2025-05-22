@@ -14,7 +14,8 @@ There are two simulation codes here:
 2) *m-to-g1* - A code for performing time-calibrated polymer simulations that progress from
    mitotic-like chromosomes to interphase-like chromosomes.
 
-### Example data ###
+Additionally, the examples directory contains data from short, small runs as examples, along with
+the commands (with command line options) used to run the simulations.
 
 ### Additional notes ###
 Code will run from directory without additional setup (provided that polychrom and OpenMM are also

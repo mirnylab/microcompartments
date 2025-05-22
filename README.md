@@ -14,6 +14,12 @@ There are two simulation codes here:
 2) *m-to-g1* - A code for performing time-calibrated polymer simulations that progress from
    mitotic-like chromosomes to interphase-like chromosomes.
 
+### Example data ###
+
+### Additional notes ###
+Code will run from directory without additional setup (provided that polychrom and OpenMM are also
+installed). Simulations were originally run on GPUs on machines running Ubuntu 22.04.5 OS.
+
 ## References ##
 [1] VY Goel et al.  Dynamics of microcompartment formation at the mitosis-to-G1 transition. *bioRxiv* 611917 (2024).
 

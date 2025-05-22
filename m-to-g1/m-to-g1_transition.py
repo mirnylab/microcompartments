@@ -33,7 +33,7 @@ paramsDict={
             "cylinderFinalSizeFactor":0.5, # cylinder height to be reduced by 1/2
             "cylinderShortenStart": 3000, #25 min, time at which cylinder shortening to commences
             "cylinderShortenEnd": 3600,# and ends
-            "pinEnds":False,
+            "pinEnds":True, # pin ends of chrm to cylinder during mitosis
             "BC_change_start": 3600, #time to start crossover from cyl to sph
             "BC_change_end": 4200, #time to end crossover from cyl to sph (leaving only sph)
             "t_sphere_inflate_start":999999999, # in a case where we only use spherical BC, use these to change density mid-sim
@@ -42,14 +42,14 @@ paramsDict={
             "outpath":"local_data",
             "npoly":61600, # 500 bp per mono, 1.925 Mb region
             "nchr":1,
-            "density":0.6, #initial prometaphase density
-            "densityInter":0.3, # density in interphase
-            "densityInflate":0.3, # density to target if we only use spherical BC
+            "density":0.65, #initial prometaphase density
+            "densityInter":0.25, # density in interphase
+            "densityInflate":0.25, # density to target if we only use spherical BC
             "repel":3.0,
              #compartment params
             "epsA":0.,
-            "epsB":0.15,
-            "epsC":1.5,
+            "epsB":0.05,
+            "epsC":0.9,
             "epsAB":0.,
             "epsAC":0.,
             "epsBC":0.,
@@ -76,12 +76,12 @@ paramsDict={
             "permCoh":0.,
             "stall":0.5, #stall is site-based. so we'll make only cohesin pay attention to stalls
             "stallall":False,
-            "nonlin_Coh_load":0, # change to true to use 1-exp(-t/T) loading 
-            "tscale_Coh_load":12600, # half simulated G1 duration
-            "t_C1_incStart": 2040, #default is 17 min after steady state prometa; "typical" in ms is 1800
-            "t_C1_incEnd": 2400, #20 min after steady state prometa; typical is 2100
-            "t_C1_decStart": 2400, #20 min after steady state prometa; typical is 2100
-            "t_C1_decEnd": 3600, #30 min; typical is 2400 (20min)
+            "nonlin_Coh_load":1, # if true use 1-exp(-t/T) loading; else use linearly increasing cohesin level
+            "tscale_Coh_load":7200, # 1 hr 
+            "t_C1_incStart": 1800,# 17 min after steady-state prometaphase 
+            "t_C1_incEnd": 2100, 
+            "t_C1_decStart": 2100, #17.5 min after steady state prometa
+            "t_C1_decEnd": 2400, #20 min
             "t_C2_decStart": 3600, #30 min
             "t_C2_decEnd": 3600, #30 min, CII unload simultaneously by default
             "t_Coh_incStart": 3600, #30 min

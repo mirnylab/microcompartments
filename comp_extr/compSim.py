@@ -89,7 +89,7 @@ INTEGRATOR=str(paramsDict['integrator'])
 
 prev_step=0
 
-polyBlockSteps=int(paramsDict['polysteps'])
+polyBlockSteps=int(paramsDict['polysteps']) ##polymer time steps to simulate between loop extrusion steps
 
 smcStepsPerBlock=1
 saveEveryBlocks = int(paramsDict['saveevery'])#100  # save every 100 blocks 
@@ -99,20 +99,20 @@ restartUpdaterEveryBlocks = 1000 # don't need to restart very often.
 
 
 ####parameters for polymer
-LENGTH=int(paramsDict['npoly'])
-numChr=int(paramsDict['nchr'])
-chrSizes=[LENGTH//numChr]*numChr
-density=float(paramsDict['density'])
-PBC=int(paramsDict['pbc'])
-Rsph= (LENGTH/density)**(1./3.) 
+LENGTH=int(paramsDict['npoly']) # how many monos
+numChr=int(paramsDict['nchr']) # how many separate segments
+chrSizes=[LENGTH//numChr]*numChr # list of chrm sizes
+density=float(paramsDict['density']) 
+PBC=int(paramsDict['pbc']) # whether or not there's a periodic bounadry condition
+Rsph= (LENGTH/density)**(1./3.) # radius of confining sphere (if no pbc)
 PBCbox_len=(4./3.*np.pi*LENGTH/density)**(1./3.)
 pbc_param = [PBCbox_len]*3 if PBC else False  # feed this into simulation initialization
 REPEL=float(paramsDict['repel']) #soft repulsion -- gives some excl vol, but chain can still pass itself.
 
-polyBondWiggleDist= 0.1 
+polyBondWiggleDist= 0.1 # rms fluctuation distance of polymer bonds i.e., sqrt(1/k_poly)
 
-ignoreAdjacent=int(paramsDict['ignore'])
-RESTART=False
+ignoreAdjacent=int(paramsDict['ignore'])# if true, ignore nonbonded potentials for monos adjacent in chain
+RESTART=False # start from an existing config?
 if len(str(paramsDict['restart'])) > 0:
     skipSavedBlocksBeginning=0 # no LEF equilibration for a sim restart
     saveEveryBlocks=10 # save much more frequently
@@ -120,20 +120,22 @@ if len(str(paramsDict['restart'])) > 0:
 restartfile=str(paramsDict['restartpath'])+"/"+str(paramsDict['restart'])
 
 # parameters for smc bonds
-smcBondWiggleDist = 0.1
-smcBondDist = 0.5
+smcBondWiggleDist = 0.1# rms bond fluc for LEF bond
+smcBondDist = 0.5# equilib length of LEF bond
 
 #compartment interactions
-EPSILON_ALL=float(paramsDict['epsAll'])
-EPSILON_A=float(paramsDict['epsA'])
-EPSILON_B=float(paramsDict['epsB'])
-EPSILON_C=float(paramsDict['epsC'])
-EPSILON_BC=float(paramsDict['epsBC'])
+EPSILON_ALL=float(paramsDict['epsAll']) # monomer-monomer attraction strength bet/ all monos
+EPSILON_A=float(paramsDict['epsA']) # AA attractions (euchrm)
+EPSILON_B=float(paramsDict['epsB']) #BB (heterochrm)
+EPSILON_C=float(paramsDict['epsC']) # CC (i.e., the microcomps)
+EPSILON_BC=float(paramsDict['epsBC']) #BC 
 
+#for automated comp structures
 B_length=int(paramsDict['blen'])
 A_length=int(paramsDict['alen'])
 C_length=int(paramsDict['clen'])
 C_spacing=int(paramsDict['cspace'])
+#for comp structures from file
 comp_list_str=str(paramsDict['comppath'])
 microcomp_list_str=str(paramsDict['microcomppath'])
 

@@ -17,6 +17,17 @@ There are two simulation codes here:
 Additionally, the examples directory contains data from short, small runs as examples, along with
 the commands (with command line options) used to run the simulations.
 
+### Running microcompartment simulations ###
+To run steady-state simulations simulations in the compartment/microcompartment configuration used to
+model the *Dag1* locus, provide the configuration files as inputs in the command line. e.g.:
+python compSim.py comppath=dag1/comps.dat microcomppath=dag1/microcompsAnaTelo.dat
+
+Other parameters can be set/changed by command line inputs as well. For more details:
+python compSim.py ?
+
+M-to-G1 simulations of the *Dag1* locus are run similarly (with the addition of an input for CTCF positions):
+python m-to-g1_transition.py comppath=dag1/comps.dat microcomppath=dag1/microcompsAnaTelo.dat ctcfpath=dag1/ctcf.dat
+
 ### Additional notes ###
 Code will run from directory without additional setup (provided that polychrom and OpenMM are also
 installed). Simulations were originally run on GPUs on machines running Ubuntu 22.04.5 OS.

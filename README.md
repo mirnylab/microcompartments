@@ -1,4 +1,4 @@
-# microcompartments and compartments
+# microcompartments
 Polymer simulations of compartments and extrusion for modeling the mitosis-to-G1 transition
 and, more generally, chromatin compartmentalization with or without loop extrusion.
 

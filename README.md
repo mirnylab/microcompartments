@@ -1,19 +1,9 @@
 # microcompartments
 Polymer simulations of compartments and extrusion for modeling the mitosis-to-G1 transition
-and, more generally, chromatin compartmentalization with or without loop extrusion.
+and, more generally, chromatin compartmentalization with or without loop extrusion. See Refs [1-2].
 
-References: 
-1) VY Goel, NG Aborden, JM Jusuf, H Zhang, LP Mori, LA Mirny, GA Blobel, EJ Banigan, AS Hansen. 
-"Dynamics of microcompartment formation at the mitosis-to-G1 transition." *Nat. Struct. Mol Biol.*
-32:2614 (2025).
-https://www.biorxiv.org/content/10.1101/2024.09.16.611917
-2) G Wutz, IF Davidson, EJ Banigan, RR Stocsits, R Kawasumi, W Tang, K Nagasaka, L Costantino,
-R Jansen, K Hirota, D Branzei, LA Mirny, JM Peters. "PDS5 proteins control genome architecture
-by limiting the lifetime of cohesin-NIPBL complexes." *Mol. Cell* 86:1614 (2026).
-https://www.biorxiv.org/content/10.1101/2025.08.30.67324
-
-Also see: The polychrom library (https://github.com/open2c/polychrom/) [1], a wrapper for the 
-OpenMM MD package [2]. Beyond using the polychrom library, the code in this repository used 
+Also see: The polychrom library (https://github.com/open2c/polychrom/) [3], a wrapper for the 
+OpenMM MD package [4]. Beyond using the polychrom library, the code in this repository used 
 examples and methods found in polychrom as a starting point.
 
 There are two simulation codes here:

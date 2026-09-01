@@ -1,9 +1,16 @@
-# microcompartments
+# microcompartments and compartments
 Polymer simulations of compartments and extrusion for modeling the mitosis-to-G1 transition
+and, more generally, chromatin compartmentalization with or without loop extrusion.
 
-Reference: VY Goel, NG Aborden, JM Jusuf, H Zhang, L Mori, LA Mirny, G Blobel, EJ Banigan, AS Hansen. 
-"Dynamics of microcompartment formation at the mitosis-to-G1 transition." bioRxiv 611917 (2024).
+References: 
+1) VY Goel, NG Aborden, JM Jusuf, H Zhang, LP Mori, LA Mirny, GA Blobel, EJ Banigan, AS Hansen. 
+"Dynamics of microcompartment formation at the mitosis-to-G1 transition." *Nat. Struct. Mol Biol.*
+32:2614 (2025).
 https://www.biorxiv.org/content/10.1101/2024.09.16.611917
+2) G Wutz, IF Davidson, EJ Banigan, RR Stocsits, R Kawasumi, W Tang, K Nagasaka, L Costantino,
+R Jansen, K Hirota, D Branzei, LA Mirny, JM Peters. "PDS5 proteins control genome architecture
+by limiting the lifetime of cohesin-NIPBL complexes." *Mol. Cell* 86:1614 (2026).
+https://www.biorxiv.org/content/10.1101/2025.08.30.67324
 
 Also see: The polychrom library (https://github.com/open2c/polychrom/) [1], a wrapper for the 
 OpenMM MD package [2]. Beyond using the polychrom library, the code in this repository used 
@@ -36,8 +43,10 @@ Code will run from directory without additional setup (provided that polychrom a
 installed). Simulations were originally run on GPUs on machines running Ubuntu 22.04.5 OS.
 
 ## References ##
-[1] VY Goel et al.  Dynamics of microcompartment formation at the mitosis-to-G1 transition. *bioRxiv* 611917 (2024).
+[1] VY Goel et al.  Dynamics of microcompartment formation at the mitosis-to-G1 transition. *Nat. Struct. Mol Biol.* 32:2614 (2025).
 
-[2] M Imakaev, A Goloborodoko, HB Brandao. polychrom v0.1.0. *Zenodo*: https://zenodo.org/records/3579473 DOI: 10.5281/zenodo.3579472
+[2] G Wutz, IF Davidson, EJ Banigan et al. PDS5 proteins control genome architecture by limiting the lifetime of cohesin-NIPBL complexes. *Mol. Cell* 86:1614 (2026).
 
-[3] P Eastman et al. OpenMM 8: Molecular Dynamics Simulation with Machine Learning Potentials. *J Phys Chem B* 128:109-116 (2023).
+[3] M Imakaev, A Goloborodoko, HB Brandao. polychrom v0.1.0. *Zenodo*: https://zenodo.org/records/3579473 DOI: 10.5281/zenodo.3579472
+
+[4] P Eastman et al. OpenMM 8: Molecular Dynamics Simulation with Machine Learning Potentials. *J Phys Chem B* 128:109-116 (2023).
